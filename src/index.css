@@ -1,13 +1,136 @@
+:root {
+  --ff-primary: "Poppins", sans-serif;
+  --ff-secondary: "Montserrat", sans-serif;
+
+  --fs-primary: 1rem;
+  --fs-secondary: 1.5rem;
+  --fs-h1: 3rem;
+  --fs-h2: 2.125rem;
+  --fs-h3: 1.25rem;
+  --fs-footer-link: 1.125rem;
+
+  --line-height-h1: 3.688rem;
+  --line-height-h2: 3.125rem;
+  --line-height-primary: 1.188rem;
+  --line-height-secondary: 1.875rem;
+  --line-height-desc: 2.75rem;
+
+  --fw-nav: 500;
+  --fw-bold: 700;
+  --fw-semi-bold: 600;
+
+  --clr-brand: #275A53;
+  --clr-bg-brand: #edf7f3;
+  --clr-menu-font: #000000;
+  --clr-primary: #fff;
+  --clr-secondary: #16322E;
+  --clr-desc: #747474;
+}
+a:focus,
+a:hover,
+a:visited,
+a:link,
+a:active {
+  text-decoration: none;
+}
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: var(--ff-primary);
+  font-size: var(--fs-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+h1 {
+  font-family: var(--ff-secondary);
+  color: var(--clr-primary);
+  font-size: var(--fs-h1);
+  line-height: var(--line-height-h1);
+  font-weight: var(--fw-bold);
 }
+h2 {
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-bold);
+  line-height: var(--line-height-h2);
+  color:  var(--clr-secondary);
+}
+h3 {
+  font-size: var(--fs-secondary);
+  font-weight: var(--fw-bold);
+  line-height: var(--line-height-secondary);
+}
+h4 {
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-semi-bold);
+  line-height: var(--line-height-secondary);
+  color: var(--clr-secondary);
+}
+/* ---------------- Custom Css --------------------------------*/
+/* ---------------- Navbar Start --------------------------------*/
+.btn-login{
+    background-color: var(--clr-brand);
+}
+.menu{
+  font-weight: var(--fw-nav);
+  color: var(--clr-menu-font);
+}
+/* ---------------- Navbar End --------------------------------*/
+/* ---------------- Hero Area Start --------------------------------*/
+.header-container{
+  min-height: calc(50vh - 0px);
+  background: linear-gradient(rgba(0, 0, 0, 0.6),rgba(0, 0, 0, 0.7)), url('./images/hero-image.png');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+/* ---------------- Hero Area End --------------------------------*/
+/* ---------------- Service Area Start --------------------------------*/
+.brand-color{
+  color: var(--clr-brand);
+  font-weight: var(--fw-nav);
+}
+.card-price{
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-bold);
+  line-height: var(--line-height-h2);
+  color: var(--clr-brand);
+}
+.bg-brand{
+  background-color: var(--clr-bg-brand);
+}
+/* ---------------- Service Area End --------------------------------*/
+/* ---------------- Business Area Start --------------------------------*/
+.business-card{
+  background: transparent;
+  border: none;
+}
+/* ---------------- Business Area End --------------------------------*/
+/* ---------------- Footer Start --------------------------------*/
+.footer-section ul li{
+    list-style-type: none;
+  }
+  .footer-section ul li a{
+    text-decoration: none;
+    color: white;
+  }
+  .footer-section{
+    color: white;
+  }
+  .footer-section ul li img{
+    width: 30px;
+    margin-right: 20px;
+  }
+  .footer-section{
+    background-color: #275A53;
+  }
+  /* ---------------- Footer End --------------------------------*/
+  /* ---------------- Apartment Page Start--------------------------------*/
+.desc{
+  font-size: var(--fs-secondary);
+
+  font-weight: var(--fw-nav);
+  color: var(--clr-desc);
+}
+.color-brand{
+  color: var(--clr-brand);
+}
+   /* ---------------- Apartment Page End --------------------------------*/
