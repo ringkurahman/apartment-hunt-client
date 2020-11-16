@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import ServiceData from './ServiceData'
+import { connect } from 'react-redux'
+import { apartmentList } from '../../reduxStore/actions/rentHouseAction'
 
 
 
-const ServiceArea = () => {
+const ServiceArea = ({ apartmentList, loading, apartments, error }) => {
 
     const [serviceLists, setServiceLists] = useState([])
     
     useEffect(() => {
-        fetch('http://localhost:5000/getRentHouseData')
-            .then(res => res.json())
-            .then(data => setServiceLists(data))
+        apartmentList()
     }, [])
 
     return (
@@ -21,11 +21,12 @@ const ServiceArea = () => {
                         <p className="brand-color mb-2">House Rent</p>
                         <h2>Discover the latest Rent <br/>available today</h2>
                     </div>
-                    <div className="d-flex flex-wrap justify-content-center my-5">
+                    <div className="d-flex flex-wrap justify-content-center">
+                        {loading ? <h3>Loading...</h3> : error ? <h3>{error}</h3> : <div className="d-flex flex-wrap justify-content-center my-5">
                         {
-                         serviceLists.map(service =><ServiceData key={service._id} service={service}></ServiceData>)
+                         apartments.map(service =><ServiceData key={service._id} service={service}></ServiceData>)
                         }
-                        
+                        </div>}
                     </div>
                 </div>
             </div>
@@ -33,4 +34,10 @@ const ServiceArea = () => {
     )
 }
 
-export default ServiceArea
+const mapStateToProps = (state) => ({
+    loading: state.rentHouseReducer.loading,
+    apartments: state.rentHouseReducer.apartments,
+    error: state.rentHouseReducer.error
+})
+
+export default connect(mapStateToProps, { apartmentList })(ServiceArea )

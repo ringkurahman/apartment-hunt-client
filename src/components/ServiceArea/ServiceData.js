@@ -12,7 +12,7 @@ const ServiceData = ({ service }) => {
 
     return (
         <div className="ml-3 mt-3">
-                    <div className="card" style={{width: '19rem'}}>
+                    <div className="card" style={{width: '22rem'}}>
                         <img className="card-img-top" src={`data:image/png;base64,${service.image.img}`} alt="Service One" />
                         <div className="card-body">
                             <h3 className="card-title">{ title }</h3>
