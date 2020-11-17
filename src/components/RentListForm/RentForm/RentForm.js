@@ -1,7 +1,10 @@
 import React from 'react'
 
 
-const RentForm = ({ rentLists }) => {
+const RentForm = ({ data }) => {
+
+    const getBookedData = JSON.parse(sessionStorage.getItem('bookedData'))
+    const { title, price, status } = getBookedData
     
     return (
         <div className="bg-white p-3 table-container">
@@ -13,20 +16,16 @@ const RentForm = ({ rentLists }) => {
                 <th style={{ color: "#aaaaaa"}} scope="col">Action</th>
                 </tr>
             </thead>
-            <tbody>
-                {
-                  rentLists.map(list => 
-                        
+            <tbody>    
                     <tr>
-                        <td>{list.title}</td>
-                        <td>${list.price}</td>
+                        <td>{title}</td>
+                        <td>${price}</td>
+                        <td>{ status }</td>
                     </tr>
-                    )
-                }
             </tbody>
         </table>
         </div>
-    );
-};
+    )
+}
 
 export default RentForm

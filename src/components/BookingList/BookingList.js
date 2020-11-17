@@ -14,7 +14,10 @@ const BookingList = () => {
     useEffect(() => {
         fetch('http://localhost:5000/getBooking?email='+loggedInUser.email)
             .then(res => res.json())
-            .then(data => setBookings(data))
+            .then(data => {
+                setBookings(data)
+                sessionStorage.setItem('bookedData', JSON.stringify(data))
+            })
     }, [])
 
 
@@ -27,7 +30,9 @@ const BookingList = () => {
                 </div>
                 <div className="col-12 col-sm-12 col-md-10">
                     <div className="p-4" style={{ backgroundColor: "#F4FDFB", borderRadius: '15px' }}>
-                        <RentListForm bookings={bookings} />
+                        {
+                            bookings.map(booking =><RentListForm key={booking._id} booking={booking} />)
+                        }
                     </div>
                 </div>
             </div>

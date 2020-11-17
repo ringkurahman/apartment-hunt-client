@@ -10,7 +10,6 @@ export const apartmentList = () => {
             })
 
             const res = await axios.get('http://localhost:5000/getRentHouseData')
-            console.log(res)
             dispatch({
                 type: get_apartment_success,
                 payload: res.data

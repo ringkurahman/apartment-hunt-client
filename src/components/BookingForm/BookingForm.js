@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from "react-hook-form"
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { apartmentList } from '../../reduxStore/actions/rentHouseAction'
 
 
-const BookingForm = () => {
+const BookingForm = ({id, apartmentList, loading, apartments, error }) => {
     
     const { register, handleSubmit, watch, errors } = useForm()
     const [info, setInfo] = useState({})
@@ -18,11 +20,23 @@ const BookingForm = () => {
         setInfo(newInfo)
     }
 
+    const selectData = apartments.filter(item => item._id === id)
+    console.log(selectData)
     const onSubmit = data => {
+
+        const newInfo = { ...info }
+        newInfo.status = 'Pending'
+        newInfo.bathroom = selectData[0].bathroom
+        newInfo.bedroom = selectData[0].bedroom
+        newInfo.price = selectData[0].price
+        newInfo.title = selectData[0].title
+        newInfo.location = selectData[0].location
+        newInfo.id = selectData[0]._id
+        console.log(newInfo)
         fetch('http://localhost:5000/addBooking', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ ...data, ...info })
+            body: JSON.stringify({ ...data, newInfo })
         })
             .then(response => response.json())
             .then(data => {
@@ -33,6 +47,10 @@ const BookingForm = () => {
             })
         history.replace(from)
     }
+
+    useEffect(() => {
+        apartmentList()
+    }, [])
 
     return (
         <div className="bg-light px-3 pt-5 pb-4">
@@ -56,7 +74,13 @@ const BookingForm = () => {
                 <button type="submit" className="form-control btn btn-login text-white px-4">Request Booking</button>
             </form>
         </div>
-    );
-};
+    )
+}
 
-export default BookingForm
+const mapStateToProps = (state) => ({
+    loading: state.rentHouseReducer.loading,
+    apartments: state.rentHouseReducer.apartments,
+    error: state.rentHouseReducer.error
+})
+
+export default connect(mapStateToProps, { apartmentList })(BookingForm )

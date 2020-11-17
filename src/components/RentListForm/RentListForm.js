@@ -1,7 +1,19 @@
 import React from 'react'
 
 
-const RentListForm = ({ bookings }) => {
+const RentListForm = ({ booking }) => {
+
+    const { _id, name, email, number, desc } = booking
+
+        const handleChange = (e) => {
+        fetch('http://localhost:5000/update', {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ _id: _id, status: e.target.value })
+            })
+                .then(res => res.json())
+                .then(data => console.log('data updated'))
+        }
 
     return (
         <div className="bg-white p-3 table-container">
@@ -16,16 +28,18 @@ const RentListForm = ({ bookings }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {
-                        bookings.map(list =>
                             <tr>
-                                <td>{list.name}</td>
-                                <td>{list.email}</td>
-                                <td>{list.number}</td>
-                                <td>{list.desc}</td>
-                            </tr>
-                        )
-                    }
+                                <td>{name}</td>
+                                <td>{email}</td>
+                                <td>{number}</td>
+                                <td>{desc}</td>
+                              <select onChange={handleChange}>
+                              <option value="Pending">Pending</option>
+                              <option value="On going">On Going</option>
+                              <option value="Done">Done</option>
+                              <option value="Cancel">Cancel</option>
+                            </select>
+                        </tr>
                 </tbody>
             </table>
         </div>

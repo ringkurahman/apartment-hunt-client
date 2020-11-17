@@ -1,19 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { UserContext } from '../../App'
+import React, { useEffect } from 'react'
 import DashboardNavbar from '../DashboardNavbar'
 import RentForm from '../RentListForm/RentForm/RentForm'
 import Sidebar from '../Sidebar/Sidebar'
+import { connect } from 'react-redux'
+import { myRentList } from '../../reduxStore/actions/myRentAction'
 
 
-const MyRent = () => {
 
-    const [loggedInUser, setLogInUser] = useContext(UserContext)
-    const [rentLists, setRentLists] = useState([])
-
+const MyRent = ({ myRentList, loading, rentlist, error }) => {
+    
     useEffect(() => {
-        fetch('http://localhost:5000/myRent')
-            .then(res => res.json())
-            .then(data => setRentLists(data))
+        myRentList()
     }, [])
 
     return (
@@ -25,7 +22,9 @@ const MyRent = () => {
                 </div>
                 <div className="col-12 col-sm-12 col-md-10">
                     <div className="p-4" style={{ backgroundColor: "#F4FDFB", borderRadius: '15px' }}>
-                        <RentForm rentLists = {rentLists}  />
+                        {
+                            rentlist.map(data =><RentForm key={data._id} data = {data}  />)
+                        }
                     </div>
                 </div>
             </div>
@@ -33,4 +32,10 @@ const MyRent = () => {
     )
 }
 
-export default MyRent
+const mapStateToProps = (state) => ({
+    loading: state.myRentReducer.loading,
+    rentlist: state.myRentReducer.rentlist,
+    error: state.myRentReducer.error
+})
+
+export default connect(mapStateToProps, { myRentList })(MyRent)

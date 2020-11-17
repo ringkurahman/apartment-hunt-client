@@ -7,25 +7,23 @@ import image5 from '../images/rectangle410.png'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import { useParams } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { rentRoom } from '../reduxStore/actions/rentRoomAction'
 
 
-const title = 'Family Apartment Three'
-const price = 256
-const desc = '3000 sq-ft., 3 Bedroom, Semi-furnished, Luxurious, South facing Apartment for Rent in Rangs Malancha, Melbourne.'
-
-
-
-const Apartment = () => {
+const Apartment = ({ rentRoom, loading, rentroom, error }) => {
 
     const { id } = useParams()
     const [apartment, setApartment] = useState([])
-    // const image  = apartment.map(data =>data.image.img)
-    console.log(apartment)
     
     useEffect(() => {
         fetch(`http://localhost:5000/room/${id}`)
             .then(res => res.json())
-            .then(data => setApartment(data))
+            .then(data => {
+                setApartment(data)
+                sessionStorage.setItem('room', JSON.stringify(data))
+            })
+        
     }, [id])
 
     return (
@@ -43,26 +41,26 @@ const Apartment = () => {
                     <div className='col-md-8'>
                         <div>
                             {
-                                apartment.map(data => <img className='img-fluid' src={`data:image/png;base64,${data.image.img}`} alt={title}/>) 
+                                apartment.map(data => <img className='img-fluid' src={`data:image/png;base64,${data.image.img}`} alt='Family Apartment'/>) 
                             }
                         </div>
                         <div className='d-flex flex-wrap my-3'>
                             <div className=''>
-                            <img className='img-fluid pt-3' src={image2} alt={title} style={{ width: '10.625rem' }} />
+                            <img className='img-fluid pt-3' src={image2} alt='Family Apartment' style={{ width: '10.625rem' }} />
                             </div>
                             <div className='ml-lg-3 pt-3'>
-                                <img className='img-fluid' src={image3} alt={title} style={{ width: '10.625rem' }} />
+                                <img className='img-fluid' src={image3} alt='Family Apartment' style={{ width: '10.625rem' }} />
                             </div>
                             <div className='ml-lg-3 pt-3'>
-                                <img className='img-fluid' src={image4} alt={title} style={{ width: '10.625rem' }} />
+                                <img className='img-fluid' src={image4} alt='Family Apartment' style={{ width: '10.625rem' }} />
                             </div>
                             <div className='ml-lg-3 pt-3'>
-                                <img className='img-fluid' src={image5} alt={title} style={{ width: '10.625rem' }} />
+                                <img className='img-fluid' src={image5} alt='Family Apartment' style={{ width: '10.625rem' }} />
                             </div>
                         </div>
                     </div>
                     <div className='col-md-4'>
-                        <BookingForm />
+                        <BookingForm id={id} />
                     </div>
                 </div>
                 <div className='col-md-8 my-3 pl-0'>
@@ -75,7 +73,7 @@ const Apartment = () => {
                                 apartment.map(data => <h2 className='color-brand'>${data.price}</h2>) 
                             }
                         </div>
-                        <p className='desc'>{ desc }</p>
+                        <p className='desc'>3000 sq-ft., 3 Bedroom, Semi-furnished, Luxurious, South facing Apartment for Rent in Rangs Malancha, Melbourne.</p>
                     </div>
                     <div className='mt-5'>
                         <h3 className='color-brand'>Price Details-</h3>
@@ -97,7 +95,13 @@ const Apartment = () => {
             </div>
             <Footer />
         </div>
-    );
-};
+    )
+}
 
-export default Apartment
+const mapStateToProps = (state) => ({
+    loading: state.rentRoomReducer.loading,
+    rentroom: state.rentRoomReducer.rentroom,
+    error: state.rentRoomReducer.error
+})
+
+export default connect(mapStateToProps, { rentRoom })(Apartment)
